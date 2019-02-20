@@ -35,8 +35,10 @@ const shouldInlineRuntimeChunk = process.env.INLINE_RUNTIME_CHUNK !== 'false';
 const useTypeScript = fs.existsSync(paths.appTsConfig);
 
 // style files regexes
-const cssRegex = /\.(css|less)$/;
+const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
+const lessRegex = /\.less$/;
+const lessModuleRegex = /\.module\.less$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
@@ -416,6 +418,32 @@ module.exports = function(webpackEnv) {
                 getLocalIdent: getCSSModuleLocalIdent,
               }),
             },
+	          {
+		          //less
+		          test: lessRegex,
+		          exclude: lessModuleRegex,
+		          use:getStyleLoaders(
+			          {
+				          importLoaders: 2,
+				          sourceMap: isEnvProduction && shouldUseSourceMap,
+			          },
+			          'less-loader'
+		          ),
+		          sideEffects: true,
+	          },
+	          {
+		          //less
+		          test: lessModuleRegex,
+		          use:getStyleLoaders(
+			          {
+				          importLoaders: 2,
+				          sourceMap: isEnvProduction && shouldUseSourceMap,
+				          modules: true,
+				          getLocalIdent: getCSSModuleLocalIdent,
+			          },
+			          'less-loader'
+		          ),
+	          },
             // Opt-in support for SASS (using .scss or .sass extensions).
             // By default we support SASS Modules with the
             // extensions .module.scss or .module.sass

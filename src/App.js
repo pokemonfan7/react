@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './App.less'
-import MyMenu from './component/my-header/MyMenu'
+import MyMenu from './component/my-menu/MyMenu'
+import Note from './component/note/Note'
 
 class App extends Component {
 	render() {
@@ -8,7 +9,7 @@ class App extends Component {
 			<div className="main-content">
 				<MyMenu/>
 				<div>
-					77
+					<Note/>
 				</div>
 			</div>
 		)
